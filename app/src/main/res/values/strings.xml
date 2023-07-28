@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Virtual Classroom Solution</string>
+<!--    new strings-->
+    <string name="welcome_message">Virtual Classroom</string>
+    <string name="join_class">Join Class</string>
+    <string name="schedule">Schedule</string>
+    <string name="announcements">Announcements</string>
+    <string name="assignments">Assignments</string>
+    <string name="resources">Resources</string>
+</resources>

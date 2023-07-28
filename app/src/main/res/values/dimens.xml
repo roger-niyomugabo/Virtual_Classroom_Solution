@@ -1,0 +1,16 @@
+<resources>
+    <dimen name="text_small">18sp</dimen>
+    <dimen name="text_medium">24sp</dimen>
+    <dimen name="text_large">30sp</dimen>
+
+<!-- Margins -->
+    <dimen name="margin_0">5dp</dimen>
+    <dimen name="margin_1">10dp</dimen>
+    <dimen name="margin_2">20dp</dimen>
+    <dimen name="margin_3">30dp</dimen>
+    <dimen name="margin_4">40dp</dimen>
+    <dimen name="margin_5">50dp</dimen>
+    <dimen name="margin_6">60dp</dimen>
+    <dimen name="margin_7">70dp</dimen>
+    <dimen name="margin_8">80dp</dimen>
+</resources>
