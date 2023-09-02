@@ -24,8 +24,16 @@ public class ActionDialogFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        Bundle args = getArguments();
+        String courseDescription = args.getString("courseDescription", "");
+        String professor = args.getString("professor", "");
+        String title = args.getString("title","");
+        String message = "Course Title: "+ title  + "\n" + " Course Description: " + courseDescription + "\n" +
+                "Professor: " + professor;
+
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-        builder.setTitle("Choose an action")
+        builder.setTitle("Course Details")
+                .setMessage(message) // Display the course details
                 .setPositiveButton("Update", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

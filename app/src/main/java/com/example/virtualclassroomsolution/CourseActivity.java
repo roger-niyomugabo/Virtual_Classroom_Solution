@@ -57,7 +57,7 @@ public class CourseActivity extends AppCompatActivity {
 
 
     private void fetchSubjectsAndUpdateUI(RequestQueue requestQueue, SubjectAdapter adapter) {
-        String apiUrl = "http://192.168.0.101:3000/api/notes"; // Replace with your server IP
+        String apiUrl = "http://172.20.10.9:3000/api/notes"; // Replace with your server IP
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, apiUrl, null,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -66,10 +66,11 @@ public class CourseActivity extends AppCompatActivity {
                         try {
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject jsonObject = response.getJSONObject(i);
-                                int id = jsonObject.getInt("id");
-                                String title = jsonObject.getString("title");
-                                String content = jsonObject.getString("content");
-                                subjects.add(new Subject(id, title, content));
+                                String id = jsonObject.getString("id");
+                                String title = jsonObject.getString("name");
+                                String content = jsonObject.getString("description");
+                                String professor = jsonObject.getString("professor");
+                                subjects.add(new Subject(id, title, content,professor));
                             }
 
                             // Update your RecyclerView with the fetched subjects

@@ -32,7 +32,7 @@ public class UpdateFragment extends Fragment {
         updateButton = view.findViewById(R.id.btn_update);
 
         // Get the subject ID from the arguments (passed when opening the fragment)
-        int subjectId = getArguments().getInt("subjectId");
+        String subjectId = getArguments().getString("subjectId");
 
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,9 +51,9 @@ public class UpdateFragment extends Fragment {
         return view;
     }
 
-    private void updateSubject(int subjectId, String newTitle, String newContent) {
+    private void updateSubject(String subjectId, String newTitle, String newContent) {
         // Construct the update URL based on your API endpoint
-        String apiUrl = "http://192.168.0.101:3000/api/note/" + subjectId; // Replace with your actual API URL
+        String apiUrl = "http://172.20.10.9:3000/api/note/" + subjectId; // Replace with your actual API URL
 
         // Create a StringRequest for the update request
         StringRequest updateRequest = new StringRequest(Request.Method.PUT, apiUrl,
@@ -62,6 +62,8 @@ public class UpdateFragment extends Fragment {
                     public void onResponse(String response) {
                         // Update successful
                         Log.d("UPDATE", "Subject updated successfully");
+
+
                     }
                 },
                 new Response.ErrorListener() {
@@ -76,8 +78,8 @@ public class UpdateFragment extends Fragment {
                 JSONObject jsonObject = new JSONObject();
                 try {
                     jsonObject.put("id", subjectId); // Include subjectId in the request body
-                    jsonObject.put("title", newTitle);
-                    jsonObject.put("content", newContent);
+                    jsonObject.put("name", newTitle);
+                    jsonObject.put("description", newContent);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

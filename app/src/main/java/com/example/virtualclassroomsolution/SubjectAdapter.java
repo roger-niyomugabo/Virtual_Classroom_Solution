@@ -1,6 +1,7 @@
 package com.example.virtualclassroomsolution;
 import com.android.volley.Response;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -50,25 +51,24 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectV
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                subjectLayout.setVisibility(View.GONE); // Hide the individual item layout
 
                 // Open the dialog fragment
                 ActionDialogFragment dialogFragment = new ActionDialogFragment();
+
+                Bundle args = new Bundle();
+                args.putString("subjectId", subject.getId());
+                args.putString("courseDescription", subject.getContent()); // Pass the course description
+                args.putString("professor", subject.getProfessor());
+                args.putString("title", subject.getTitle());
+                dialogFragment.setArguments(args);
                 dialogFragment.setActionListener(new ActionDialogFragment.ActionListener() {
                     @Override
                     public void onUpdateClicked() {
                         // Open the UpdateFragment and pass the subject ID
-                        UpdateFragment updateFragment = new UpdateFragment();
-                        Bundle args = new Bundle();
-                        args.putInt("subjectId", subject.getId());
-                        updateFragment.setArguments(args);
-
-                        // Replace the current fragment with the UpdateFragment
-                        FragmentManager fragmentManager = ((AppCompatActivity) holder.itemView.getContext()).getSupportFragmentManager();
-                        fragmentManager.beginTransaction()
-                                .replace(R.id.fragment_container, updateFragment)
-                                .addToBackStack(null)
-                                .commit();
+                        Intent intent = new Intent(holder.itemView.getContext(), UpdateSubjectActivity.class);
+                        intent.putExtra("subjectId", subject.getId());
+                        // Pass other necessary extras
+                        holder.itemView.getContext().startActivity(intent);
                     }
 
                     @Override
@@ -78,6 +78,7 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectV
                         // Remove the subject from the list and update the adapter
                         subjectList.remove(subject);
                         notifyDataSetChanged();
+
                     }
                 });
                 dialogFragment.show(((AppCompatActivity) v.getContext()).getSupportFragmentManager(), "action_dialog");
@@ -85,9 +86,9 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectV
         });
     }
 
-    private void deleteSubject(int subjectId, SubjectViewHolder holder) {
+    private void deleteSubject(String subjectId, SubjectViewHolder holder) {
         // Construct the delete URL based on your API endpoint
-        String apiUrl = "http://192.168.0.101:3000/api/note/" + subjectId; // Replace with your actual API URL
+        String apiUrl = "http://172.20.10.9:3000/api/note/" + subjectId; // Replace with your actual API URL
 
         // Create a StringRequest for the delete request
         StringRequest deleteRequest = new StringRequest(Request.Method.DELETE, apiUrl,
@@ -101,6 +102,7 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectV
                         int position = holder.getAdapterPosition();
                         subjectList.remove(position);
                         notifyItemRemoved(position);
+
                     }
                 },
                 new Response.ErrorListener() {
@@ -131,4 +133,6 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectV
             subjectContent = itemView.findViewById(R.id.subject_content);
         }
     }
+
+
 }
